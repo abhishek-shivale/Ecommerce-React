@@ -1,14 +1,11 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-// import Header from './components/Header';
-// import Footer from './components/Footer';
-import Page404 from './pages/404';
-import Home from './pages/Home';
-import Product from './pages/Product';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './features/Header/Navbar.jsx';
+import Page404 from './pages/404';
+import Product from './pages/Product';
 import Profile from './pages/Profile.jsx';
 import Search from './pages/Search.jsx';
-import ShoppingCart from './pages/ShoppingCart.jsx';
+import ProductDetails from './pages/ProductDetails.jsx';
 
 function Layout() {
   return (
@@ -18,10 +15,8 @@ function Layout() {
         <Route path="/" element={<Product />} />
         <Route path='/user/profile' element={<Profile />} />
         <Route path='/search' element={<Search />} />
-        <Route path='/cart' element={<ShoppingCart />} />
         <Route path="*" element={<Page404 />} />
       </Routes>
-      {/* <Footer /> */}
     </>
   );
 }

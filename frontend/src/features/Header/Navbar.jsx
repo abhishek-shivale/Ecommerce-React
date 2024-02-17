@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { OpenCart } from '../../redux/cart/Cart'
 
 const navigation = [
-  { id: 1 , name: 'Home', href: '/', current: true },
+  { id: 1 , name: 'Home', href: '/', current: false },
   { id: 2 , name: 'Search', href: '/search', current: false },
 ]
 

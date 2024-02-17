@@ -3,6 +3,8 @@ import { Fragment, useState } from 'react'
 import { Dialog, RadioGroup, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { StarIcon } from '@heroicons/react/20/solid'
+import { CloseCard } from '../redux/cart/Productdetails'
+import { useDispatch, useSelector } from 'react-redux'
 
 const product = {
   name: 'Basic Tee 6-Pack ',
@@ -34,13 +36,19 @@ function classNames(...classes) {
 }
 
 export default function ProductDetails() {
-  const [open, setOpen] = useState(false)
+  const dispatch = useDispatch();
+  const open = useSelector((state) => state.cart.isOpen);
+
+  const handleClick = () => {
+    dispatch(CloseCard());
+    console.log('Card is Close', open);
+  };
   const [selectedColor, setSelectedColor] = useState(product.colors[0])
   const [selectedSize, setSelectedSize] = useState(product.sizes[2])
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={setOpen}>
+      <Dialog as="div" className="relative z-10" onClose={handleClick}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -69,7 +77,7 @@ export default function ProductDetails() {
                   <button
                     type="button"
                     className="absolute right-4 top-4 text-gray-400 hover:text-gray-500 sm:right-6 sm:top-8 md:right-6 md:top-6 lg:right-8 lg:top-8"
-                    onClick={() => setOpen(false)}
+                    onClick={handleClick}
                   >
                     <span className="sr-only">Close</span>
                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />
