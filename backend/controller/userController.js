@@ -91,6 +91,24 @@ export const UpdateDetails = asyncHandler(async (req, res, next) => {
     SendResponse(200, true, 'User profile is updated', res);
 });
 
+export const GetUserDetails = asyncHandler(async(req,res,next)=>{
+    const id = req.id
+
+    const user = await userModel.findById(id)
+    
+    if(!user){
+        return SendResponse(400, false, 'Invalid Token', res); 
+    }
+    
+    const {email,name,phonenumber,address} = user
+
+    const ressponse = {
+        email,name,phonenumber,address
+    }
+
+    SendResponse(200, true, ressponse, res)
+})
+
 export const DeleteUser = asyncHandler(async (req, res, next) => {
     const id = req.id;
     
