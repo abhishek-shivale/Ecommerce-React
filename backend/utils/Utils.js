@@ -1,4 +1,8 @@
 import jwt from "jsonwebtoken"
+
+// import dotenv from 'dotenv'
+
+// dotenv.config({path:'/backend/.env'})
 const JWTPASS = process.env.JWTPASS || 'PYHHKJGVUKS%^%$GVF&^H677HJ'
 const SALTROUND = process.env.SALTROUND || 10
 import bcrypt from 'bcrypt'
