@@ -6,7 +6,7 @@ const app = express()
 
 app.use(express.json())
 app.use(cors())
-dotenv.config()
+dotenv.config({path:'/backend/.env'})
 
 
 app.use('/api/v1', UserRouter)

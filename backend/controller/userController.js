@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 import validator from "validator";
 import asyncHandler from "../middlewares/asyncHandler.js";
 import {SendResponse, SendToken, createPassword, verifyPassword} from "../utils/Utils.js";
+import SendEmail from "../utils/SendMail.js";
 
 
 export const createAccuont = asyncHandler(async(req,res,next)=>{
@@ -32,6 +33,8 @@ export const createAccuont = asyncHandler(async(req,res,next)=>{
         phonenumber:phonenumber
     })
 
+    SendEmail(email,'Thanks for Joinig','Welcome To Ezcart.Shop Lookin forward to be usefull for you')
+
    return SendToken('Account has been created',res,user._id)
 })
 
@@ -54,6 +57,8 @@ export const loginAccount = asyncHandler(async(req,res,next)=>{
     if(!CheckPassword){
         return SendResponse(411,false,'Invalid Credentails', res)
     }
+
+    SendEmail(email,'Welcome Back', 'We miss you really We got offer for you')
 
     return SendToken('All credentails is correct', res, user._id)
 })
@@ -88,6 +93,8 @@ export const UpdateDetails = asyncHandler(async (req, res, next) => {
 
     await user.save();
 
+    SendEmail(user.email,'your Account has been Updated', 'your Account has been Updated for mor info check on website')
+
     SendResponse(200, true, 'User profile is updated', res);
 });
 
@@ -120,5 +127,7 @@ export const DeleteUser = asyncHandler(async (req, res, next) => {
     
     await userModel.deleteOne({ _id: id }); 
     
+    SendEmail(user.email,'Your account has been deleted', 'Your account has been deleted! we are goona miss you much')
+
     SendResponse(200, true, 'Your account has been deleted', res); 
 });
