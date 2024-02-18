@@ -20,10 +20,12 @@ const UserSchema = new mongoose.Schema({
         required:true
     },
     role:{
+        type:String,
         default:'user',
     }
 },{
     timestamps:true
 })
 
-export default mongoose.model('User',UserSchema)
+const userModel = mongoose.model('User',UserSchema)
+export default userModel
