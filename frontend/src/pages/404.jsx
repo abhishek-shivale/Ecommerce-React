@@ -1,5 +1,5 @@
 import React from 'react'
-import Page404Svg from '../../public/Page404Svg.svg'
+import Page404Svg from '/Page404Svg.svg'
 import { Link } from 'react-router-dom'
 function Page404() {
   return (

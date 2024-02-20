@@ -5,9 +5,8 @@ import App from './App.jsx'
 import './index.css'
 import Store from './app/store.js'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={Store}>
-    <App />
+      <App />
   </Provider>
-  
-)
+);

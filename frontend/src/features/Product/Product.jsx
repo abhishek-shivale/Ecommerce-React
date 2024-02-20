@@ -1,4 +1,4 @@
-import ShoppingCart from "./ShoppingCart"
+import ShoppingCart from "../../pages/ShoppingCart"
 const products = [
     {
       id: 1,
