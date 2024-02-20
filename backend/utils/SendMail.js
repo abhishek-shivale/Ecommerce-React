@@ -1,7 +1,4 @@
 import sgmail from '@sendgrid/mail'
-import dotenv from 'dotenv'
-
-dotenv.config({path:'/backend/.env'})
 
 const apiKey = process.env.SENDGRID_API || ``
 

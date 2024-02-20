@@ -1,5 +1,4 @@
 import userModel from "../models/userModel.js";
-import bcrypt from 'bcrypt'
 import validator from "validator";
 import asyncHandler from "../middlewares/asyncHandler.js";
 import {SendResponse, SendToken, createPassword, verifyPassword} from "../utils/Utils.js";

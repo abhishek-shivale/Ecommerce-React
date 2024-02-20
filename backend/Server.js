@@ -3,7 +3,7 @@ import connectDatabase from "./config/database.js";
 
 connectDatabase()
 process.on('uncaughtException',(err) => {
-    console.log('uncaughtException'+ err.info)
+    console.log('uncaughtException'+ err.message)
      process.exit(1)
 })
 
