@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import ShoppingCart from "../../pages/ShoppingCart";
-import { OpenCard } from "../../redux/cart/Productdetails";
+import { OpenCard } from "../../redux/products/Productdetails.js";
 import { getProduct } from "./product.js";
+import ProductDetails from "../../pages/ProductDetails.jsx";
 
 export default function Product() {
   const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null); 
   const dispatch = useDispatch();
-
   const fetchData = async () => {
     try {
       const { data } = await getProduct();
@@ -23,6 +24,11 @@ export default function Product() {
     fetchData();
   }, []);
 
+  const handleProductClick = (product) => {
+    setSelectedProduct(product); 
+    dispatch(OpenCard()); 
+  };
+
   return (
     <>
       <div className="bg-white">
@@ -35,9 +41,7 @@ export default function Product() {
             {products.map((product) => (
               <div
                 key={product._id}
-                onClick={() => {
-                  dispatch(OpenCard());
-                }}
+                onClick={() => handleProductClick(product)} // Pass product to click handler
                 className="group border cursor-pointer relative">
                 <div className="aspect-h-1  aspect-w-1 w-full overflow-hidden rounded-md bg-gray-400 lg:aspect-none group-hover:opacity-75 lg:h-80">
                   <img
@@ -59,6 +63,8 @@ export default function Product() {
           </div>
         </div>
       </div>
+      { <ProductDetails product={selectedProduct} />}{" "}
+      {/* Render ProductDetails if a product is selected */}
     </>
   );
 }

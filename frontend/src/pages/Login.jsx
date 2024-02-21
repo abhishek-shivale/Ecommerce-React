@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { LoginFunction, RegisterFunction } from "../features/auth/auth";
+import { LoginFunction } from "../features/auth/auth";
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { LoginState } from "../redux/auth/auth";

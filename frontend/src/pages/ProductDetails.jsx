@@ -2,53 +2,27 @@ import { Fragment, useState } from "react";
 import { Dialog, RadioGroup, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { StarIcon } from "@heroicons/react/20/solid";
-import { CloseCard } from "../redux/cart/Productdetails.js";
+import { CloseCard } from "../redux/products/Productdetails.js";
 import { useDispatch, useSelector } from "react-redux";
-
-const product = {
-  name: "Basic Tee 6-Pack ",
-  price: "$192",
-  rating: 3.9,
-  reviewCount: 117,
-  href: "#",
-  imageSrc:
-    "https://tailwindui.com/img/ecommerce-images/product-quick-preview-02-detail.jpg",
-  imageAlt: "Two each of gray, white, and black shirts arranged on table.",
-  colors: [
-    { name: "White", class: "bg-white", selectedClass: "ring-gray-900" },
-    { name: "Gray", class: "bg-gray-200", selectedClass: "ring-gray-400" },
-    { name: "Black", class: "bg-gray-900", selectedClass: "ring-gray-900" },
-  ],
-  sizes: [
-    { name: "XXS", inStock: true },
-    { name: "XS", inStock: true },
-    { name: "S", inStock: true },
-    { name: "M", inStock: true },
-    { name: "L", inStock: true },
-    { name: "XL", inStock: true },
-    { name: "XXL", inStock: true },
-    { name: "XXXL", inStock: false },
-  ],
-};
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function ProductDetails() {
+export default function ProductDetails(data) {
   const dispatch = useDispatch();
   const open = useSelector((state) => state.ProductdetailsReducer.isCardOpen);
-  console.log(open);
+  console.log(data.product?.colors[0]);
   const handleClick = () => {
     dispatch(CloseCard());
     console.log("Card is Close", open);
   };
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
-  const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
+  const [selectedColor, setSelectedColor] = useState(data.product?.colors[0]);
+  const [selectedSize, setSelectedSize] = useState(data.product?.sizes[2]);
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={handleClick}>
+      <Dialog as="div" className="relative z-10" onClose={close}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -83,14 +57,14 @@ export default function ProductDetails() {
                   <div className="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
                     <div className="aspect-h-3 aspect-w-2 overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5">
                       <img
-                        src={product.imageSrc}
-                        alt={product.imageAlt}
+                        src={data.product?.imageSrc}
+                        alt={data.product?.imageAlt}
                         className="object-cover object-center"
                       />
                     </div>
                     <div className="sm:col-span-8 lg:col-span-7">
                       <h2 className="text-2xl font-bold text-gray-900 sm:pr-12">
-                        {product.name}
+                        {data.product?.name}
                       </h2>
 
                       <section
@@ -101,7 +75,7 @@ export default function ProductDetails() {
                         </h3>
 
                         <p className="text-2xl text-gray-900">
-                          {product.price}
+                          {data.product?.price}
                         </p>
 
                         {/* Reviews */}
@@ -113,7 +87,7 @@ export default function ProductDetails() {
                                 <StarIcon
                                   key={rating}
                                   className={classNames(
-                                    product.rating > rating
+                                    data.product?.rating > rating
                                       ? "text-gray-900"
                                       : "text-gray-200",
                                     "h-5 w-5 flex-shrink-0"
@@ -123,12 +97,12 @@ export default function ProductDetails() {
                               ))}
                             </div>
                             <p className="sr-only">
-                              {product.rating} out of 5 stars
+                              {data.product?.rating} out of 5 stars
                             </p>
                             <a
                               href="#"
                               className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                              {product.reviewCount} reviews
+                              {data.product?.reviewCount} reviews
                             </a>
                           </div>
                         </div>
@@ -156,7 +130,7 @@ export default function ProductDetails() {
                                 Choose a color
                               </RadioGroup.Label>
                               <span className="flex items-center space-x-3">
-                                {product.colors.map((color) => (
+                                {data.product?.colors.map((color) => (
                                   <RadioGroup.Option
                                     key={color.name}
                                     value={color}
@@ -209,7 +183,7 @@ export default function ProductDetails() {
                                 Choose a size
                               </RadioGroup.Label>
                               <div className="grid grid-cols-4 gap-4">
-                                {product.sizes.map((size) => (
+                                {data.product?.sizes.map((size) => (
                                   <RadioGroup.Option
                                     key={size.name}
                                     value={size}
