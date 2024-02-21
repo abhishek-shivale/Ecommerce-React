@@ -1,41 +1,49 @@
-import { Fragment } from 'react'
-import {useNavigate, Link} from 'react-router-dom'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { useDispatch, useSelector } from 'react-redux'
-import { OpenCart } from '../../redux/cart/Cart'
+import { Fragment } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import {
+  Bars3Icon,
+  ShoppingCartIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
+import { useDispatch, useSelector } from "react-redux";
+import { OpenCart } from "../../redux/cart/Cart";
+import { LoginState } from "../../redux/auth/auth";
 
 const navigation = [
-  { id: 1 , name: 'Home', href: '/', current: false },
-  { id: 2 , name: 'Search', href: '/search', current: false },
-]
+  { id: 1, name: "Home", href: "/", current: false },
+  { id: 2, name: "Search", href: "/search", current: false },
+];
 
- export function LogoComponets(){
+export function LogoComponets() {
   return (
-    <div className='flex gap-2 text-white -ml-10'>
-    <ShoppingCartIcon className='h-8' />
-     <h1 className='mt-2 font-bold text-xl'> Ecommerce</h1>
-   </div>
-  )
+    <div className="flex gap-2 text-white -ml-10">
+      <ShoppingCartIcon className="h-8" />
+      <h1 className="mt-2 font-bold text-xl"> Ecommerce</h1>
+    </div>
+  );
 }
-
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
 
-
-
 export default function Navbar() {
-  const Login = useSelector((state)=> state.auth.isLogin)
+  const navigate = useNavigate();
+  const Login = useSelector((state) => state.auth.isLogin);
   const dispatch = useDispatch();
   const cartIsOpen = useSelector((state) => state.cart.isOpen);
 
   const handleClick = () => {
     dispatch(OpenCart());
-    console.log('Cart is open', cartIsOpen);
+    console.log("Cart is open", cartIsOpen);
   };
 
+  const logout = () => {
+    window.localStorage.clear();
+    dispatch(LoginState());
+    navigate("/");
+  };
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -56,41 +64,41 @@ export default function Navbar() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                    <Link to={'/'}>
+                  <Link to={"/"}>
                     <LogoComponets />
-                    </Link>
+                  </Link>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
                       <Link key={item.id} to={`${item.href}`}>
-                      <div
-                        key={item.name}
-                        // href={item.href}
-                        className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'rounded-md px-3 py-2 text-sm font-medium'
-                        )}
-                        aria-current={item.current ? 'page' : undefined}
-                      >
-                        {item.name}
-                      </div>
+                        <div
+                          key={item.name}
+                          // href={item.href}
+                          className={classNames(
+                            item.current
+                              ? "bg-gray-900 text-white"
+                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                            "rounded-md px-3 py-2 text-sm font-medium"
+                          )}
+                          aria-current={item.current ? "page" : undefined}>
+                          {item.name}
+                        </div>
                       </Link>
                     ))}
                   </div>
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-              {/* <Link to={'/cart'}> */}
+                {/* <Link to={'/cart'}> */}
                 <button
                   type="button"
                   onClick={handleClick}
-                  className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                >
+                  className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">View Product</span>
-                 
-                  <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />                 
+
+                  <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
                 </button>
                 {/* </Link> */}
 
@@ -114,58 +122,66 @@ export default function Navbar() {
                     enterTo="transform opacity-100 scale-100"
                     leave="transition ease-in duration-75"
                     leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
+                    leaveTo="transform opacity-0 scale-95">
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                     {
-                      Login? <>
-                       <Menu.Item>
-                        {({ active }) => (
-                          <Link to={'/user/profile'}>
-                          <a
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                          Your Profile
-                          </a>
-                          </Link>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                          Logout
-                          </a>
-                        )}
-                      </Menu.Item>
-                      </>:<>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link to={'/register'}>
-                          <a
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                          Register
-                          </a>
-                          </Link>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link to={'/login'}>
-                          <a
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                            >
-                            Login
-                          </a>
-                          </Link>
-                        )}
-                      </Menu.Item>
-                      </>
-                     }
-         
-                     
+                      {Login ? (
+                        <>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <Link to={"/user/profile"}>
+                                <a
+                                  className={classNames(
+                                    active ? "bg-gray-100" : "",
+                                    "block px-4 py-2 text-sm text-gray-700"
+                                  )}>
+                                  Your Profile
+                                </a>
+                              </Link>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                onClick={logout}
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700"
+                                )}>
+                                Logout
+                              </a>
+                            )}
+                          </Menu.Item>
+                        </>
+                      ) : (
+                        <>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <Link to={"/register"}>
+                                <a
+                                  className={classNames(
+                                    active ? "bg-gray-100" : "",
+                                    "block px-4 py-2 text-sm text-gray-700"
+                                  )}>
+                                  Register
+                                </a>
+                              </Link>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <Link to={"/login"}>
+                                <a
+                                  className={classNames(
+                                    active ? "bg-gray-100" : "",
+                                    "block px-4 py-2 text-sm text-gray-700"
+                                  )}>
+                                  Login
+                                </a>
+                              </Link>
+                            )}
+                          </Menu.Item>
+                        </>
+                      )}
                     </Menu.Items>
                   </Transition>
                 </Menu>
@@ -181,11 +197,12 @@ export default function Navbar() {
                   as="a"
                   href={item.href}
                   className={classNames(
-                    item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'block rounded-md px-3 py-2 text-base font-medium'
+                    item.current
+                      ? "bg-gray-900 text-white"
+                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                    "block rounded-md px-3 py-2 text-base font-medium"
                   )}
-                  aria-current={item.current ? 'page' : undefined}
-                >
+                  aria-current={item.current ? "page" : undefined}>
                   {item.name}
                 </Disclosure.Button>
               ))}
@@ -194,5 +211,5 @@ export default function Navbar() {
         </>
       )}
     </Disclosure>
-  )
+  );
 }
