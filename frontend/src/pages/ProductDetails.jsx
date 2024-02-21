@@ -15,7 +15,7 @@ const product = {
     "https://tailwindui.com/img/ecommerce-images/product-quick-preview-02-detail.jpg",
   imageAlt: "Two each of gray, white, and black shirts arranged on table.",
   colors: [
-    { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
+    { name: "White", class: "bg-white", selectedClass: "ring-gray-900" },
     { name: "Gray", class: "bg-gray-200", selectedClass: "ring-gray-400" },
     { name: "Black", class: "bg-gray-900", selectedClass: "ring-gray-900" },
   ],
