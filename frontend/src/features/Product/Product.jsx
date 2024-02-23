@@ -7,7 +7,7 @@ import ProductDetails from "../../pages/ProductDetails.jsx";
 
 export default function Product() {
   const [products, setProducts] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState(null); 
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const dispatch = useDispatch();
   const fetchData = async () => {
     try {
@@ -25,8 +25,8 @@ export default function Product() {
   }, []);
 
   const handleProductClick = (product) => {
-    setSelectedProduct(product); 
-    dispatch(OpenCard()); 
+    setSelectedProduct(product);
+    dispatch(OpenCard());
   };
 
   return (
@@ -63,8 +63,7 @@ export default function Product() {
           </div>
         </div>
       </div>
-      { <ProductDetails product={selectedProduct} />}{" "}
-      {/* Render ProductDetails if a product is selected */}
+      { selectedProduct && <ProductDetails product={selectedProduct} />}
     </>
   );
 }

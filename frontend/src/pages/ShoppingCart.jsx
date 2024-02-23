@@ -2,50 +2,27 @@ import { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useDispatch, useSelector } from "react-redux";
-import { CloseCart } from "../redux/cart/Cart";
-
-const products = [
-  {
-    id: 1,
-    name: "Throwback Hip Bag",
-    href: "#",
-    color: "Salmon",
-    price: "$90.00",
-    quantity: 1,
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg",
-    imageAlt:
-      "Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.",
-  },
-  {
-    id: 2,
-    name: "Medium Stuff Satchel",
-    href: "#",
-    color: "Blue",
-    price: "$32.00",
-    quantity: 1,
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg",
-    imageAlt:
-      "Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.",
-  },
-  // More products...
-];
+import {
+  CloseCart,
+  addProducttoCart,
+  removeProductFromCart,
+} from "../redux/cart/Cart";
 
 const ShoppingCart = () => {
   const dispatch = useDispatch();
   const open = useSelector((state) => state.cart.isOpen);
-const storedCart = window.localStorage.getItem("cart");
-const cartProduct = storedCart ? JSON.parse(storedCart) : products;
-  const [cartProducts, setCartProducts] = useState(cartProduct);
+  const products = useSelector((state) => state.cart.cartProduct);
+
+  const [cartProducts, setCartProducts] = useState(products);
+  console.log(products);
 
   const total = cartProducts.reduce((acc, product) => {
-    return acc + product.quantity * parseFloat(product.price.replace("$", ""));
+    return acc + product.quantity * parseFloat(product?.price);
   }, 0);
   useEffect(() => {
-      const cart = JSON.stringify(cartProducts);
-    window.localStorage.setItem("cart", cart);
-  }, [cartProducts]);
+    setCartProducts(products);
+  }, [products]);
+
   const handleClick = () => {
     dispatch(CloseCart());
     console.log("Cart is Close", open);
@@ -63,6 +40,7 @@ const cartProduct = storedCart ? JSON.parse(storedCart) : products;
       (product) => product.id !== productId
     );
     setCartProducts(updatedProducts);
+    dispatch(removeProductFromCart(productId));
   };
 
   return (
