@@ -1,10 +1,9 @@
-import ProductModel from "../models/productModel.js";
 import asyncHandler from "../middlewares/asyncHandler.js";
-import productModel from "../models/productModel.js";
 import { v4 as uuidv4 } from "uuid";
+import productModel from "../models/productModel.js";
 
 export const getAllProduct = asyncHandler(async (req, res, next) => {
-  const products = await ProductModel.find({});
+  const products = await productModel.find({});
 
   res.status(200).json({
     success: true,
