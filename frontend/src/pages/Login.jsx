@@ -5,7 +5,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { LoginState } from "../redux/auth/auth";
 
-export default function Register() {
+export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

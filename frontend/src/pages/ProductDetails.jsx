@@ -103,7 +103,7 @@ export default function ProductDetails(data) {
                           </h3>
 
                           <p className="text-2xl text-gray-900">
-                            {data.product?.price}
+                            ${data.product?.price}
                           </p>
 
                           {/* Reviews */}
