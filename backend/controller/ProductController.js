@@ -168,3 +168,6 @@ export const deleteProduct = asyncHandler(async (req, res, next) => {
     await productModel.deleteOne({_id:product._id})
 
 })
+
+export const SearchProduct = asyncHandler(async(req,res,next)=>{
+})
