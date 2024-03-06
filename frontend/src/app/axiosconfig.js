@@ -10,6 +10,6 @@ const axiosInstance = axios.create({
 });
 
 export default axiosInstance;
-// 
+// https://backend.ezycart.shop/api/v1
 // 
 // http://localhost:8080/api/v1
