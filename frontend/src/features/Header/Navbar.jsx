@@ -12,7 +12,7 @@ import { LoginState } from "../../redux/auth/auth";
 
 const navigation = [
   { id: 1, name: "Home", href: "/", current: false },
-  { id: 2, name: "Search", href: "/search", current: false },
+  { id: 2, name: "Search", href: "/search?sort=most_popular", current: false },
 ];
 
 export function LogoComponets() {
@@ -30,7 +30,7 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const Login = useSelector((state) => state.auth.isLogin);
+  const Login = window.localStorage.getItem('token')
   const dispatch = useDispatch();
   const cartIsOpen = useSelector((state) => state.cart.isOpen);
 

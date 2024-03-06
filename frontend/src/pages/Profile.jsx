@@ -22,6 +22,8 @@ function Profile() {
           address: data.data.message.address,
           phonenumber: data.data.message.phonenumber,
         });
+
+        
        
       }
     } catch (error) {

@@ -2,8 +2,10 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import { updateProfile } from "../features/auth/auth";
+import { useNavigate } from "react-router-dom";
 
 function EditProfile() {
+    const navigate = useNavigate()
   useEffect(() => {}, []);
 
   const {

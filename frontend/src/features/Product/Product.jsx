@@ -41,7 +41,7 @@ export default function Product() {
             {products.map((product) => (
               <div
                 key={product._id}
-                onClick={() => handleProductClick(product)} // Pass product to click handler
+                onClick={() => handleProductClick(product)} 
                 className="group border cursor-pointer relative">
                 <div className="aspect-h-1  aspect-w-1 w-full overflow-hidden rounded-md bg-gray-400 lg:aspect-none group-hover:opacity-75 lg:h-80">
                   <img

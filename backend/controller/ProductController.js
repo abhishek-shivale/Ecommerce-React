@@ -169,5 +169,84 @@ export const deleteProduct = asyncHandler(async (req, res, next) => {
 
 })
 
-export const SearchProduct = asyncHandler(async(req,res,next)=>{
-})
+
+
+export const SearchProduct = asyncHandler(async (req, res, next) => {
+  const {sort, color, size,category} = req.query
+ 
+
+  let query = {};
+
+  if (color) {
+    query["colors.name"] = color;
+  }
+
+  if (size) {
+    query["sizes.name"] = size;
+  }
+
+  if (category) {
+    query["category"] = category;
+  }
+
+  try {
+
+    let products;
+
+    switch (sort) {
+
+      case "most_popular":
+        products = await productModel
+          .find(query)
+          .sort({ rating: -1, reviewCount: -1 });
+
+        break;
+
+      case "best_rating":
+        products = await productModel
+        .find(query)
+        .sort({ rating: -1 });
+
+        break;
+
+      case "newest":
+        products = await productModel
+        .find(query)
+        .sort({ createdAt: -1 });
+
+        break;
+
+      case "price_low_to_high":
+        products = await productModel
+        .find(query)
+        .sort({ price: 1 });
+
+        break;
+
+      case "price_high_to_low":
+        products = await productModel
+        .find(query)
+        .sort({ price: -1 });
+
+        break;
+
+      default:
+        products = await productModel
+        .find(query);
+
+        break;
+    }
+
+    res.status(200).json({
+      success: true,
+      products: products,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+});
+
