@@ -9,7 +9,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://ecommerce-react-dta.pages.dev",
     credentials: true,
   })
 );
@@ -19,3 +19,5 @@ app.use("/api/v1", UserRouter);
 app.use("/api/v1/product", productRouter);
 
 export default app;
+// http://localhost:5173
+//origin: "https://ecommerce-react-dta.pages.dev",
