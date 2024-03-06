@@ -28,8 +28,6 @@ export default function Register() {
       console.log(data);
       if (data.data.success === true) {
         dispatch(LoginState())
-        const userData = data.data?.userInfo;
-        window.localStorage.setItem("UserData", userData);
         window.localStorage.setItem("token", data.data.token);
         toast.success(data?.data.message);
         setTimeout(() => {

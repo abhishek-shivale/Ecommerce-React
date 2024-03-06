@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { LoginState } from "./redux/auth/auth.js";
 import ShoppingCart from "./pages/ShoppingCart.jsx";
+import EditProfile from "./pages/EditProfile.jsx";
 function Layout() {
   const dispatch = useDispatch();
 
@@ -31,6 +32,7 @@ function Layout() {
 
         <Route path="/user/profile" element={<Profile />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/user/profile/edit" element={<EditProfile />} />
         <Route path="*" element={<Page404 />} />
       </Routes>
     </>

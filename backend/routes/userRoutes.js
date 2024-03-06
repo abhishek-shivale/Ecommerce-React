@@ -10,7 +10,7 @@ UserRouter.route('/login').post(loginAccount)
 
 UserRouter.route('/info').get(ProtectedRoute,GetUserDetails)
 
-UserRouter.route('/update').get(ProtectedRoute,UpdateDetails)
+UserRouter.route('/update').put(ProtectedRoute,UpdateDetails)
 
 UserRouter.route('/delete').delete(ProtectedRoute,DeleteUser)
 
