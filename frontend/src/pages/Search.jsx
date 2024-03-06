@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
@@ -8,7 +8,7 @@ import {
   PlusIcon,
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { getsortProduct } from "../features/Product/product";
 import ProductDetails from "./ProductDetails";
 import { useDispatch } from "react-redux";
@@ -71,9 +71,11 @@ function classNames(...classes) {
 }
 
 export default function Search() {
-    const [selectedProduct, setSelectedProduct] = useState(null);
-  const dispatch = useDispatch()
-  const[products, setproducts] = useState([])
+  const inputRef = useRef(null);
+  const navigate = useNavigate()
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const dispatch = useDispatch();
+  const [products, setproducts] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const updateSearchParams = (option, checked, section) => {
     setSearchParams((prevParams) => {
@@ -96,23 +98,29 @@ export default function Search() {
       return params.toString();
     });
   };
-   async function sortProduct(sort, color, size, category) {
+  async function sortProduct(sort, color, size, category) {
     const res = await getsortProduct(sort, color, size, category);
-    if(res.data.success == true){
+    console.log(res);
+    if (res.data.success == true) {
       setproducts(res.data.products);
     }
-   }
-     const handleProductClick = (product) => {
-       setSelectedProduct(product);
-       dispatch(OpenCard());
-     };
+  }
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+    dispatch(OpenCard());
+  };
   useEffect(() => {
-    const sort = searchParams.getAll("sort");
-    const color = searchParams.getAll("color");
-    const size = searchParams.getAll("size");
-    const category = searchParams.getAll("category");
-    sortProduct(sort, color, size, category);
-  }, [updateSearchParams]);
+    const timeoutId = setTimeout(() => {
+      const sort = searchParams.getAll("sort");
+      const color = searchParams.getAll("color");
+      const size = searchParams.getAll("size");
+      const category = searchParams.getAll("category");
+      sortProduct(sort, color, size, category);
+    }, 1000);
+
+    return () => clearTimeout(timeoutId); 
+  }, [searchParams]); 
+
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   return (
@@ -275,9 +283,7 @@ export default function Search() {
                             {({ active }) => (
                               <div
                                 onClick={() => {
-                                  setSearchParams((prev) => {
-                                    return { ...prev, sort: option.href };
-                                  });
+                                  navigate(`/search?sort=${option.href}`)
                                 }}
                                 className={classNames(
                                   option.current
@@ -365,6 +371,7 @@ export default function Search() {
                                   key={option.value}
                                   className="flex items-center">
                                   <input
+                                    ref={inputRef}
                                     onChange={(e) =>
                                       updateSearchParams(
                                         option,

@@ -11,6 +11,6 @@ export const getsortProduct = (sort, color, size, category) => {
     const sizeParam = size ? size.join("&size=") : "";
     const categoryParam = category ? category.join("&category=") : "";
     const url = `/product/sort?sort=${sort}&color=${colorParam}&size=${sizeParam}&category=${categoryParam}`;
-  const response = axiosInstance.get(`/product/sort?${url}`);
+  const response = axiosInstance.get(`${url}`);
   return response;
 };
