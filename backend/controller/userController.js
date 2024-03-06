@@ -34,7 +34,14 @@ export const createAccuont = asyncHandler(async(req,res,next)=>{
 
     SendEmail(email,'Thanks for Joinig','Welcome To Ezcart.Shop Lookin forward to be usefull for you')
 
-   return SendToken('Account has been created',res,user._id)
+     const userInfo = {
+       name: user.name,
+       email: user.email,
+       address: user.address,
+       phonenumber: user.phonenumber,
+     };
+
+   return SendToken('Account has been created',res,user._id, userInfo)
 })
 
 export const loginAccount = asyncHandler(async(req,res,next)=>{
@@ -58,8 +65,15 @@ export const loginAccount = asyncHandler(async(req,res,next)=>{
     }
 
     SendEmail(email,'Welcome Back', 'We miss you really We got offer for you')
+     
+    const userInfo = {
+        name: user.name,
+        email: user.email,
+        address: user.address,
+        phonenumber: user.phonenumber
+    }
 
-    return SendToken('All credentails is correct', res, user._id)
+    return SendToken('All credentails is correct', res, user._id , userInfo)
 })
 
 export const UpdateDetails = asyncHandler(async (req, res, next) => {

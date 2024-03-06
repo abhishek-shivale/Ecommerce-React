@@ -13,6 +13,7 @@ const authSlice = createSlice({
     UserDataReducer: (state, action) => {
       state.userInfo = action.payload;
     },
+
   },
 });
 

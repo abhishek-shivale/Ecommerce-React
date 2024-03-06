@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { LoginFunction } from "../features/auth/auth";
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { LoginState } from "../redux/auth/auth";
+import { LoginState, UserDataReducer } from "../redux/auth/auth";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -26,6 +26,8 @@ export default function Login() {
       console.log(data);
       if (data.data.success === true) {
         dispatch(LoginState());
+        const userData = data?.data?.userInfo;
+        window.localStorage.setItem("UserData", JSON.stringify(userData));
         window.localStorage.setItem("token", data.data.token);
         toast.success(data?.data.message);
         setTimeout(() => {

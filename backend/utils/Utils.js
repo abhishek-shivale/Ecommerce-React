@@ -9,7 +9,7 @@ export const SendResponse = (statuscode, success, message, res) => {
   });
 };
 
-export const SendToken = async (message, res, id) => {
+export const SendToken = async (message, res, id, userInfo) => {
   console.log(JWTPASS);
   try {
     const paylod = { id: id };
@@ -17,6 +17,7 @@ export const SendToken = async (message, res, id) => {
     res.status(200).json({
       success: true,
       message: message,
+      userInfo: userInfo,
       token: Token,
     });
   } catch (error) {

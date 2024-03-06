@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { RegisterFunction } from "../features/auth/auth";
 import toast, { Toaster } from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { LoginState, UserDataReducer } from "../redux/auth/auth";
 
 export default function Register() {
@@ -28,6 +28,8 @@ export default function Register() {
       console.log(data);
       if (data.data.success === true) {
         dispatch(LoginState())
+        const userData = data.data?.userInfo;
+        window.localStorage.setItem("UserData", userData);
         window.localStorage.setItem("token", data.data.token);
         toast.success(data?.data.message);
         setTimeout(() => {
