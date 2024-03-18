@@ -1,0 +1,11 @@
+FROM node:20
+
+WORKDIR /backend
+
+COPY . .
+
+RUN npm install
+
+EXPOSE 8080
+
+CMD [ "node", "Server.js" ]
